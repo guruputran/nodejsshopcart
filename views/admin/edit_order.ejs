@@ -1,0 +1,26 @@
+<%- include('../_layouts/adminheader') %>
+
+<h2 class="page-title">Edit a category</h2>
+<a href="/users/adminorders" class="btn btn-primary">Back to all orders</a>
+<br><br>
+
+<form method="post" action="/users/orders/edit-order/<%= id %>">
+
+    <div class="form-group">
+        <label for="">Order ID :</label>
+        <%= id %>
+    </div>
+    <div class="form-group">
+        <label for="">Select Status</label>
+        <select class="selectpicker" name="status" data-style="btn-success">
+            <% for (const i in statusVals) { %>
+            <option id="<%= statusVals[i].id %>" value="<%= statusVals[i].value %>">
+                <%= statusVals[i].name %>
+            </option>
+            <% } %>
+        </select>
+    </div>
+    <button class="btn btn-default">Submit</button>
+</form>
+
+<%- include('../_layouts/adminfooter') %>

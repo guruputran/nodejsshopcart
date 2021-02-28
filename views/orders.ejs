@@ -1,0 +1,54 @@
+<%- include('_layouts/header'); %>
+
+<h2>Orders here</h2>
+<table class="table table-dark">
+    <thead>
+        <th scope="col">Order #</th>
+        <th scope="col">Username</th>
+        <th scope="col">Items Desc</th>
+        <th scope="col">Total amount (RM)</th>
+        <% if (user && user.admin == 1) { %>
+        <th scope="col">Status</th>
+
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+        <% } %>
+
+    </thead>
+    <tbody>
+
+        <% orders.forEach(order => { %>
+        <tr>
+            <td><%= order._id %></td>
+            <td><%= order.username %></td>
+            <td> <% order.order.forEach(o => { %><%= o.title %>(<%=o.qty %> kg),<% }) %>
+            </td>
+            <td> <% order.order.forEach(o => { %>RM <%=             
+            parseFloat(o.qty) * parseFloat(o.price)            
+            %>,
+                <% }) %></td>
+            <% if (user && user.admin == 1) { %>
+            <td>
+                <% if (order.status ==0) { %>
+                <button class="btn btn-danger btn-sm" type="button">Unpaid </button>
+                <% } else if (order.status ==1) { %>
+                <button class="btn btn-info btn-sm" type="button">Paid </button>
+                <% } else { %>
+                <button class="btn btn-success btn-sm" type="button">Delivered </button>
+                <% }  %>
+            </td>
+            <td><a href="/users/orders/edit/<%= order._id %>">
+                    <i class="fa fa-pencil" aria-hidden="true" style="color:green"></i>
+                </a>
+            </td>
+            <td><a href="/users/orders/delete/<%= order._id %>">
+                    <i class="fa fa-trash" aria-hidden="true" style="color:red"></i>
+                </a>
+            </td>
+            <% } %>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<%- include('_layouts/footer'); %>
